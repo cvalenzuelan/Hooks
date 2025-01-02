@@ -5,13 +5,18 @@ import { useForm } from "../hooks/useForm";
 export const UsuariosComponentes = () => {
 	// Se llama el hooks de formulario
 	const { url, formulario, onInputChange } = useForm({ url: '' })
-	const { data, isLoading = false, errors } = useFetch(formulario.url)
+	const [fetchUrl, setFetchUrl] = useState(null);
+	const { data, isLoading = false, errors } = useFetch(fetchUrl)
+	const busqueda = () => {
+		setFetchUrl(formulario.url); // Solo actualiza la URL cuando se presiona el botón
+	};
 	return (
 		<>
 			<h1>Lista de Usuarios</h1>
 			<div className="form-group">
 				<label htmlFor="url">URL</label>
 				<input type="text" className="form-control" name="url" value={url} onChange={onInputChange} />
+				<button onClick={busqueda} className="btn btn-primary">Buscar</button>
 			</div>
 			<br />
 			{isLoading
